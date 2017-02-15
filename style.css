@@ -1,0 +1,68 @@
+.emphasis {
+  background-color: lightgray;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.reset-padding {
+  padding: 0px;
+}
+
+.reset-padding li {
+  margin-bottom: 10px;
+}
+
+.sans-mono {
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+.red {
+  color: red;
+}
+
+.italic-gray {
+  font-style: italic;
+  color: gray;
+  font-weight:100;
+}
+
+.highlight_for {
+  background-color: lightgray;
+}
+
+.sanskrit {
+  font-size: 30px;
+}
+
+.black {
+  background-color: white;
+}
+
+.orange {
+  background-color: lightgray;
+}
+/*.bespoke-inactive {
+  display: none;
+}
+
+.bespoke-active {
+  display: block;
+}
+
+.topic-active {
+  background-color: black;
+  color: white;
+  display: block;
+}
+
+.topic-inactive {
+  background-color: white;
+  color: white;
+  display: none;
+}
+
+.bespoke-slide {
+  font-family: sans-serif;
+  font-size: 30px;
+  text-align: center;
+}*/

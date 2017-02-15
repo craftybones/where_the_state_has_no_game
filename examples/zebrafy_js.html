@@ -1,0 +1,11 @@
+<div class="syntax"><pre><span></span><span class="kd">var</span> <span class="nx">toDiv</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span><span class="nx">colour</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">&quot;&lt;div &quot;</span> <span class="o">+</span> <span class="s2">&quot;class=&#39;&quot;</span> <span class="o">+</span> <span class="nx">colour</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">words</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="s2">&quot;is&quot;</span><span class="p">,</span><span class="s2">&quot;the&quot;</span><span class="p">,</span><span class="s2">&quot;new&quot;</span><span class="p">,</span><span class="s2">&quot;orange&quot;</span><span class="p">];</span>
+
+<span class="nx">words</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">colour</span><span class="o">=</span><span class="p">(</span><span class="nx">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="s2">&quot;black&quot;</span><span class="o">:</span><span class="s2">&quot;orange&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">toDiv</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="nx">colour</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="syntax.css">
+  </head>
+  <body>
+    <article class="bespoke-parent">
+      <section>
+        <h1>Where <span class="emphasis">State</span> Has No Game</h1>
+      </section>
+      <section>
+        <h1>Motivation</h1>
+        <p class="bullet">I noticed I was solving things very differently</p>
+        <ul class="reset-padding">
+          <li>No explicit loops</li>
+          <li>No explicit branches</li>
+          <li>No variables?!!?!!</li>
+          <li>One line functions</li>
+          <li>More readable(I think)</li>
+        </ul>
+      </section>
+      <section>
+        <p>Find maximal sum path</p>
+        <pre class="sans-mono">
+   3
+  7 4
+ 2 4 6
+8 5 9 3
+        </pre>
+      </section>
+      <section>
+        <p>Find maximal sum path</p>
+        <pre class="sans-mono">
+   <span class="red">3</span>
+  <span class="red">7</span> 4
+ 2 <span class="red">4</span> 6
+8 5 <span class="red">9</span> 3
+        </pre>
+      </section>
+
+      <section>
+        <p>Helps to think in reverse</p>
+        <pre class="sans-mono">
+8 5 9 3
+ 2 4 6
+  7 4
+   3
+        </pre>
+      </section>
+
+      <section>
+        <p>Helps to think in reverse</p>
+        <pre class="sans-mono">
+[<span class="red">8</span> 5] [5 <span class="red">9</span>] [<span class="red">9</span> 3]
+  +     +     +
+  2     4     6
+     7     4
+        3
+        </pre>
+      </section>
+
+      <section>
+        <p>Helps to think in reverse</p>
+        <pre class="sans-mono">
+ <span class="red">8</span> <span class="red">9</span> <span class="red">9</span>
+ + + +
+ 2 4 6
+  7 4
+   3
+        </pre>
+      </section>
+
+      <section>
+        <p>Helps to think in reverse</p>
+        <pre class="sans-mono">
+ <span class="red">10</span> <span class="red">13</span> <span class="red">15</span>
+   7  4
+    3
+</pre>
+      </section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">max-adjacents</span> <span class="p">[</span><span class="nv">coll</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map max </span><span class="nv">coll</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">coll</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">sum-of</span> <span class="p">[</span><span class="nv">prev</span> <span class="nv">current</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map + </span><span class="nv">current</span> <span class="p">(</span><span class="nf">max-adjacents</span> <span class="nv">prev</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">max-path-sum</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="nb">reduce </span><span class="nv">sum-of</span> <span class="p">(</span><span class="nb">reverse </span><span class="nv">tree</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">tree</span>  <span class="p">[[</span><span class="mi">3</span><span class="p">]</span>
+           <span class="p">[</span><span class="mi">7</span> <span class="mi">4</span><span class="p">]</span>
+          <span class="p">[</span><span class="mi">2</span> <span class="mi">4</span> <span class="mi">6</span><span class="p">]</span>
+         <span class="p">[</span><span class="mi">8</span> <span class="mi">5</span> <span class="mi">9</span> <span class="mi">3</span><span class="p">]]</span>
+
+<span class="p">(</span><span class="nf">max-path-sum</span> <span class="nv">tree</span><span class="p">)</span>
+</pre></div>
+</section>
+
+  <section>
+    <h1 class="bullet">Q: How?</h1>
+    <h1 class="bullet">A: Immutability</h1>
+  </section>
+
+  <section>
+    <h1>What is <span class="emphasis">State</span>?</h1>
+  </section>
+
+<section>
+  <h1>Etymology</h1>
+</section>
+  <section>
+    <h1 class="bullet">sta-re <span class="italic-gray">(latin)</span></h1>
+    <h2 class="bullet">To stand firm</h2>
+  </section>
+<section>
+  <h1><span class="sanskrit">स्थिर </span><span class="italic-gray">(sanskrit)</span></h1>
+  <h1><span class="sanskrit">स्थिथि </span><span class="italic-gray">(sanskrit)</span></h1>
+  <h2 class="bullet">To stand firm</h2>
+</section>
+
+<section>
+  <h1>Irony</h1>
+  <p>Change state?</p>
+</section>
+
+<section>
+  What exactly is your problem with <span class="emphasis">state</span> dude?
+</section>
+<section>
+  <div class="syntax"><pre><span></span><span class="kd">class</span> <span class="nc">StudentTest</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">eligibleToVoteTest</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">Date</span> <span class="n">currentDate</span> <span class="o">=</span> <span class="n">Date</span><span class="o">.</span><span class="na">today</span><span class="o">();</span>
+      <span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+      <span class="c1">// student.setSomeBirthdate()</span>
+      <span class="n">assertTrue</span><span class="o">(</span><span class="n">student</span><span class="o">.</span><span class="na">isEligibleToVote</span><span class="o">(</span><span class="n">currentDate</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">ineligibleToVoteTest</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">Date</span> <span class="n">currentDate</span> <span class="o">=</span> <span class="n">Date</span><span class="o">.</span><span class="na">today</span><span class="o">();</span>
+      <span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+      <span class="c1">// student.setSomeBirthdate()</span>
+      <span class="n">assertFalse</span><span class="o">(</span><span class="n">student</span><span class="o">.</span><span class="na">isEligibleToVote</span><span class="o">(</span><span class="n">currentDate</span><span class="o">));</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  </pre></div>
+</section>
+
+
+<section>
+<div class="syntax"><pre><span></span><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEligibleToVote</span><span class="o">(</span><span class="n">Date</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">birthday</span><span class="o">.</span><span class="na">yearsBetween</span><span class="o">(</span><span class="n">date</span><span class="o">.</span><span class="na">toGMT</span><span class="o">())&gt;=</span><span class="mi">18</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Assume the following class was defined in a library</span>
+<span class="kd">class</span> <span class="nc">Date</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">Date</span> <span class="nf">toGMT</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// clobbers its own field to reset to GMT</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</section>
+
+
+<section>
+  <h1>Issues</h1>
+  <ol class="reset-padding">
+    <li>Can't <span class="emphasis">reason</span> about code by looking at a contract</li>
+    <li>Tests don't guarantee anything</li>
+    <li>Final doesn't help</li>
+    <li>References can be held</li>
+  </ol>
+</section>
+
+<section>
+  <h1>So? Who cares?</h1>
+</section>
+
+<section data-bespoke-hash="we-should">
+  <h1>We should!</h1>
+  <ul class="reset-padding">
+    <li>We <span class="emphasis">read</span> code more than we write it</li>
+    <li>We carry a lot of <span class="emphasis">context</span> in our heads</li>
+    <li>Most of the code in our projects is in <span class="emphasis">libraries</span></li>
+    <li>The world is getting increasingly <span class="emphasis">concurrent</span></li>
+    <li>I promis...</li>
+  </ul>
+</section>
+
+<section>
+  <h1>OMG! What now?!</h1>
+</section>
+
+<section>
+  <h2>Make everything <span class="emphasis">immutable</span>...kinda</h2>
+</section>
+
+<section>
+  <h1>Immutability</h1>
+
+  <h2>Extreme solution</h2>
+  <h2>Constraint</h2>
+  <h2>Loss of civil liberties and all that</h2>
+</section>
+
+<section>
+  <h2>What happens in a largely immutable universe?</h2>
+</section>
+
+<section>
+  <h1>Loops</h1>
+  <p>Most looping constructs we are used to have some state</p>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="c1">// i holds state here.</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Hope the boxer doesn&#39;t get up</span>
+<span class="p">}</span>
+
+<span class="c1">// tamilNaduDoesNotHaveAChiefMinister is state here</span>
+<span class="k">while</span><span class="p">(</span><span class="nx">tamilNaduDoesNotHaveAChiefMinister</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// party time</span>
+<span class="p">}</span>
+<span class="c1">// as is Tamil Nadu</span>
+</pre></div>
+
+</section>
+
+<section>
+  <pre class="sans-mono">
+    i++;
+    tamilNaduDoesNotHaveAChiefMinister=false;</pre>
+  <p>Won't work in our immutable universe</p>
+</section>
+
+<section>
+  <h1>Recursion() {</h1>
+  <p>Your new best friend</p>
+  <p>Recursion();</p>
+  <h1>}...............</h1>
+</section>
+
+<section>
+  <h1>Recursion</h1>
+  <p>No state shared between recursive calls</p>
+</section>
+
+<section>
+  <h1>The Palindrome Experiment</h1>
+  <ul class="reset-padding">
+    <li>Asked several people to write a palindrome function</li>
+    <li>Control group across a range of work experience</li>
+    <li>Nearly everyone answered the same way</li>
+    <li>Iterate from either end and meet in the middle</li>
+  </ul>
+</section>
+
+<section>
+  <h1>The Palindrome Experiment</h1>
+  <ul class="reset-padding">
+    <li>What about odd/even case?</li>
+    <li>What about empty strings?</li>
+    <li>Everyone had to rethink whether it was &lt; or &lt;=</li>
+  </ul>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="kd">var</span> <span class="nx">isPalindrome</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">for</span><span class="p">(;</span><span class="nx">i</span><span class="o">&lt;=</span><span class="nx">j</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">,</span><span class="nx">j</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">string</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">!=</span><span class="nx">string</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="k">def </span><span class="nv">middle-of</span> <span class="p">(</span><span class="nb">comp rest </span><span class="nv">butlast</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">palindrome?</span> <span class="p">[</span><span class="nv">string</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">string</span><span class="p">)</span>
+    <span class="nv">true</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">not= </span><span class="p">(</span><span class="nb">first </span><span class="nv">string</span><span class="p">)</span> <span class="p">(</span><span class="nb">last </span><span class="nv">string</span><span class="p">))</span>
+      <span class="nv">false</span>
+      <span class="p">(</span><span class="nf">palindrome?</span> <span class="p">(</span><span class="nf">middle-of</span> <span class="nv">string</span><span class="p">)))))</span>
+</pre></div>
+</section>
+
+<section>
+  <h1>Recursion</h1>
+  <ul class="reset-padding">
+    <li>Forces you to think about terminal conditions first</li>
+    <li>Forces you to think about the smallest version of the problem</li>
+    <li>The only mathematical construct for looping</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Recursion</h1>
+  <p>Why are we averse to recursion?</p>
+</section>
+
+<section>
+  <h1>Problem Solving Is A Habit</h1>
+  <p>How we think about loops is a habit</p>
+</section>
+
+<section>
+  <h3>C,C++</h3>
+<div class="syntax"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="highlight_for">  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+  <span class="p">};</span>
+
+</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+
+<section>
+  <h3>Javascript</h3>
+<div class="syntax"><pre><span></span><span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="p">[];</span>
+<span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="highlight_for"><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">a</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+<span class="p">};</span></span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</pre></div>
+</section>
+
+<section>
+  <h3>C#</h3>
+<div class="syntax"><pre><span></span><span class="k">namespace</span> <span class="nn">Fibo</span> <span class="p">{</span>
+  <span class="k">class</span> <span class="nc">Program</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span><span class="p">[]</span> <span class="n">a</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">10</span><span class="p">];</span>
+      <span class="n">a</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+      <span class="n">a</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="highlight_for">      <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="p">-</span> <span class="m">1</span><span class="p">]</span> <span class="p">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="p">-</span> <span class="m">2</span><span class="p">];</span>
+      <span class="p">};</span>
+</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+
+<section>
+  <h3>Java</h3>
+<div class="syntax"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Fibo</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+    <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">a</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="highlight_for">    <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="o">];</span>
+    <span class="o">};</span>
+</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</section>
+
+<section>
+  <h1>What the...?!!</h1>
+  <h1>Yes!</h1>
+</section>
+
+<section>
+  <h1>Seriously?!</h1>
+  <p>The same piece of code without any changes compiled in at least 7 languages</p>
+  <pre>
+    C
+    C#
+    C++
+    Java
+    Swift
+    Groovy
+    Javascript
+    Objective C
+  </pre>
+  <p>Also works with minor punctuation changes across some other languages</p>
+</section>
+
+<section>
+  <p>In fact, it is just mild synctactic sugar around Assembly</p>
+  <pre class="reset-padding">
+    mov ax,2
+    // do something
+    inc ax
+    cmp ax,10
+    jge somewhere
+  </pre>
+</section>
+
+<section>
+  <h1>Maybe the wheel doesn't need reinventing, but...</h1>
+</section>
+
+<section>
+  <h1>It also means we won't be thinking recursion anytime soon</h1>
+</section>
+
+<section>
+  <h1>Habits</h1>
+  <p>We seek change as long as it is evolutionary</p>
+</section>
+
+<section>
+  <h1>Habits</h1>
+  <p>Disruptive change is dissonant to us</p>
+</section>
+
+<section>
+  <h1>Loops</h1>
+  <p>map, filter, reduce and other looping constructs</p>
+</section>
+
+<section>
+  <h1>Functions</h1>
+  <p>Lack of state means functions can only do one thing</p>
+  <p>Unless they are dealing with side effects</p>
+</section>
+
+<section>
+  <h1>Functions</h1>
+  <ul class="reset-padding">
+    <li>Pure - always return same value for same input arguments</li>
+    <li>Singular - tend to do only one thing</li>
+    <li>Reason - a lot easier to reason about and understand</li>
+    <li>Composable - Can compose function chains easily</li>
+    <li>Laziness</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Laziness</h1>
+  <p>Evaluating something only when necessary</p>
+</section>
+
+<section>
+  <h1>Laziness</h1>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">inc-and-print</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">do</span>
+    <span class="p">(</span><span class="nb">println </span><span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">millions</span> <span class="p">(</span><span class="nb">map </span><span class="nv">inc-and-print</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="mi">1000000</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">first-five</span> <span class="p">(</span><span class="nb">take </span><span class="mi">5</span> <span class="nv">millions</span><span class="p">))</span>
+
+<span class="c1">;; only evaluates the first 5(32) numbers</span>
+</pre></div>
+</section>
+
+<section>
+  <h1>Laziness</h1>
+  <p>Hard in a mutable world</p>
+</section>
+
+<section>
+  <h1>Laziness</h1>
+  <p>Helps build chains</p>
+  <p>Keeps terminal conditions outside of the main loop</p>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">fibo</span>
+  <span class="p">([]</span> <span class="p">(</span><span class="nf">fibo</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">]</span> <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">cons </span><span class="nv">s1</span> <span class="p">(</span><span class="nf">fibo</span> <span class="nv">s2</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">))))))</span>
+
+<span class="p">(</span><span class="nb">take </span><span class="mi">5</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">take-while </span><span class="p">(</span><span class="nb">partial &gt; </span><span class="mi">50</span><span class="p">)</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">take </span><span class="mi">5</span> <span class="p">(</span><span class="nb">take-nth </span><span class="mi">10</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">)))</span>
+</pre></div>
+
+</section>
+
+
+<section>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">prime-candidates-above-3</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">list* </span><span class="p">(</span><span class="nb">dec </span><span class="p">(</span><span class="nb">* </span><span class="mi">6</span> <span class="nv">x</span><span class="p">))</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nb">* </span><span class="mi">6</span> <span class="nv">x</span><span class="p">))</span>
+                   <span class="p">(</span><span class="nf">prime-candidates-above-3</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">prime-candidates</span>
+  <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">list* </span><span class="mi">2</span> <span class="mi">3</span> <span class="p">(</span><span class="nf">prime-candidates-above-3</span> <span class="mi">1</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">none</span> <span class="p">(</span><span class="nb">comp not </span><span class="nv">some</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">divisible-by?</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">zero? </span><span class="p">(</span><span class="nb">rem </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">divisibility-check</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">partial </span><span class="nv">none</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">divisible-by?</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">prime-candidates-below</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">take-while </span><span class="p">(</span><span class="nb">partial &gt;= </span><span class="nv">x</span><span class="p">)</span> <span class="nv">prime-candidates</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">is-prime?</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">threshold</span> <span class="p">(</span><span class="nf">closest-integer-sqrt</span> <span class="nv">x</span><span class="p">)</span>
+        <span class="nv">x-not-divisible-by?</span> <span class="p">(</span><span class="nf">divisibility-check</span> <span class="nv">x</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">x-not-divisible-by?</span> <span class="p">(</span><span class="nf">prime-candidates-below</span> <span class="nv">threshold</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">primes</span> <span class="p">(</span><span class="nb">filter </span><span class="nv">is-prime?</span> <span class="nv">prime-candidates</span><span class="p">))</span>
+</pre></div>
+</section>
+
+
+<section>
+  <h1>Zebrafication</h1>
+  <ul class="reset-padding">
+    <li class="black">black</li>
+    <li class="orange">is</li>
+    <li class="black">the</li>
+    <li class="orange">new</li>
+    <li class="black">orange</li>
+  </ul>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="kd">var</span> <span class="nx">toDiv</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span><span class="nx">colour</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">&quot;&lt;div &quot;</span> <span class="o">+</span> <span class="s2">&quot;class=&#39;&quot;</span> <span class="o">+</span> <span class="nx">colour</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">words</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="s2">&quot;is&quot;</span><span class="p">,</span><span class="s2">&quot;the&quot;</span><span class="p">,</span><span class="s2">&quot;new&quot;</span><span class="p">,</span><span class="s2">&quot;orange&quot;</span><span class="p">];</span>
+
+<span class="nx">words</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">colour</span><span class="o">=</span><span class="p">(</span><span class="nx">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="s2">&quot;black&quot;</span><span class="o">:</span><span class="s2">&quot;orange&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">toDiv</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="nx">colour</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+</section>
+
+<section>
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">to-div</span> <span class="p">[</span><span class="nv">content</span> <span class="nv">colour</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;&lt;div class=&#39;&quot;</span> <span class="nv">colour</span> <span class="s">&quot;&#39;&gt;&quot;</span> <span class="nv">content</span> <span class="s">&quot;&lt;/div&gt;&quot;</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">words</span> <span class="p">[</span><span class="s">&quot;black&quot;</span> <span class="s">&quot;is&quot;</span> <span class="s">&quot;the&quot;</span> <span class="s">&quot;new&quot;</span> <span class="s">&quot;orange&quot;</span><span class="p">])</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">colours</span> <span class="p">(</span><span class="nb">cycle </span><span class="p">[</span><span class="ss">:black</span> <span class="ss">:orange</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="nb">map </span><span class="nv">to-div</span> <span class="nv">words</span> <span class="nv">colours</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section>
+  <h1>Laziness</h1>
+  <p>If you make a list mutable for instance, what does it mean to lazily evaluate?</p>
+</section>
+
+<section>
+  <h1>Laziness</h1>
+  <p>Consider an example like Infinite Scroll</p>
+</section>
+
+<section>
+  <h1>Sapir-Whorf Hypothesis</h1>
+  <p>Language affects thoughts</p>
+  <p>Language causes thoughts?</p>
+</section>
+
+<section>
+  <h1>Arrival - the movie</h1>
+  <p>Please Watch</p>
+</section>
+
+<section>
+  <h1>Problems with Immutability</h1>
+  <ul class="reset-padding">
+    <li>New idiom. Hard to adopt</li>
+    <li>Performance? Recursion is hard to optimise</li>
+    <li>State is still needed</li>
+    <li>I/O, Databases etc</li>
+  </ul>
+</section>
+<section>
+  <h1>Takeaways</h1>
+  <ul class="reset-padding">
+    <li>Our languages are mostly similar</li>
+    <li>Adopting new idioms are hard</li>
+    <li>New idioms offer other perspectives to problems</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Takeaways</h1>
+  <ul class="reset-padding">
+    <li>This is not OOPS vs Functional</li>
+    <li>Immutability questions the concepts of objects however</li>
+    <li>Adopt a language that offers immutability</li>
+    <li>Even if you never write production code in it</li>
+    <li>Preferably Haskell, Clojure, Erlang...</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Thank You</h1>
+</section>
+    </article>
+
+    <script src="bespoke.min.js" charset="utf-8"></script>
+    <script src="bespoke-classes.min.js" charset="utf-8"></script>
+    <script src="bespoke-keys.min.js" charset="utf-8"></script>
+    <script src="bespoke-scale.min.js" charset="utf-8"></script>
+      <script src="bespoke-hash.min.js" charset="utf-8"></script>
+    <script src="bespoke-bullets.min.js" charset="utf-8"></script>
+    <script src="bespoke-topic.js" charset="utf-8"></script>
+    <script src="bespoke-theme-simple-slide.min.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
+  </body>
+</html>

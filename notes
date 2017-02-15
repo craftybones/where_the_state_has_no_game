@@ -1,0 +1,41 @@
+Where the state has no game
+
+- State (etymology, definition)
+  - Also include Sanskrit equivalent
+  - Languages are similar?
+- Alchemy
+- Why this talk?
+  - Project Euler problem
+  - Solution
+- Problem with state
+  - Even without concurrency
+  - Example using Date and Person birthday
+- Most of our tests are lies and can't be used to reason about code
+  - 'final' doesn't really help. References can be held
+- Extreme solution of making everything immutable
+- Sapir Whorf Hypothesis
+  - Arrival movie
+- Loops
+  - Simple for loop has state
+  - It also has an implicit condition
+  - Immutable world uses recursion to loop
+  - State won't be shared between recursive calls
+  - Palindrome experiment
+  - Changes our approach
+  - Terminal conditions first, as opposed to index
+-Premature optimisation
+  - Knuth
+  - What does 'performance' mean?
+  - Aren't we willing to take a performance hit in order to express better?
+- Functions
+  - Can't be more than a single line if there is no mutation
+  - Functions tend to be pure
+  - Easier to test
+  - Easier to reason
+  - Possible to compose
+- Lazy sequencing
+- Add slides for zebrafication, spinners etc
+- Can't hoist existing syntax for immutability
+  - = is a poor assignment operator for immutability
+  - Mixing immutable and mutable constructs make things harder
+  -

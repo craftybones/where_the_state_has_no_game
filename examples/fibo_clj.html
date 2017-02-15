@@ -1,0 +1,10 @@
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">fibo</span>
+  <span class="p">([]</span> <span class="p">(</span><span class="nf">fibo</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">]</span> <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">cons </span><span class="nv">s1</span> <span class="p">(</span><span class="nf">fibo</span> <span class="nv">s2</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">))))))</span>
+
+<span class="p">(</span><span class="nb">take </span><span class="mi">5</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">take-while </span><span class="p">(</span><span class="nb">partial &gt; </span><span class="mi">50</span><span class="p">)</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">take </span><span class="mi">5</span> <span class="p">(</span><span class="nb">take-nth </span><span class="mi">10</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">)))</span>
+</pre></div>

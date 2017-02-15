@@ -1,0 +1,25 @@
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">prime-candidates-above-3</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">list* </span><span class="p">(</span><span class="nb">dec </span><span class="p">(</span><span class="nb">* </span><span class="mi">6</span> <span class="nv">x</span><span class="p">))</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nb">* </span><span class="mi">6</span> <span class="nv">x</span><span class="p">))</span>
+                   <span class="p">(</span><span class="nf">prime-candidates-above-3</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">prime-candidates</span>
+  <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">list* </span><span class="mi">2</span> <span class="mi">3</span> <span class="p">(</span><span class="nf">prime-candidates-above-3</span> <span class="mi">1</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">none</span> <span class="p">(</span><span class="nb">comp not </span><span class="nv">some</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">divisible-by?</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">zero? </span><span class="p">(</span><span class="nb">rem </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">divisibility-check</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">partial </span><span class="nv">none</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">divisible-by?</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">prime-candidates-below</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">take-while </span><span class="p">(</span><span class="nb">partial &gt;= </span><span class="nv">x</span><span class="p">)</span> <span class="nv">prime-candidates</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">is-prime?</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">threshold</span> <span class="p">(</span><span class="nf">closest-integer-sqrt</span> <span class="nv">x</span><span class="p">)</span>
+        <span class="nv">x-not-divisible-by?</span> <span class="p">(</span><span class="nf">divisibility-check</span> <span class="nv">x</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">x-not-divisible-by?</span> <span class="p">(</span><span class="nf">prime-candidates-below</span> <span class="nv">threshold</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">primes</span> <span class="p">(</span><span class="nb">filter </span><span class="nv">is-prime?</span> <span class="nv">prime-candidates</span><span class="p">))</span>
+</pre></div>

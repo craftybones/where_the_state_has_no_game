@@ -1,0 +1,14 @@
+<div class="syntax"><pre><span></span><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEligibleToVote</span><span class="o">(</span><span class="n">Date</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">birthday</span><span class="o">.</span><span class="na">yearsBetween</span><span class="o">(</span><span class="n">date</span><span class="o">.</span><span class="na">toGMT</span><span class="o">())&gt;=</span><span class="mi">18</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Assume the following class was defined in a library</span>
+<span class="kd">class</span> <span class="nc">Date</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">Date</span> <span class="nf">toGMT</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// clobbers its own field to reset to GMT</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
