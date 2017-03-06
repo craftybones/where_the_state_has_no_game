@@ -1,0 +1,23 @@
+<div class="syntax"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">fibo</span>
+  <span class="p">([]</span> <span class="p">(</span><span class="nf">fibo</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">]</span> <span class="p">(</span><span class="nf">lazy-seq</span> <span class="p">(</span><span class="nb">cons </span><span class="nv">s1</span> <span class="p">(</span><span class="nf">fibo</span> <span class="nv">s2</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">s1</span> <span class="nv">s2</span><span class="p">))))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">fibo-container</span>
+  <span class="p">[</span><span class="nv">f</span><span class="p">]</span>
+  <span class="p">[</span><span class="ss">:div</span> <span class="p">(</span><span class="nb">map </span><span class="nv">to-paragraph</span> <span class="p">(</span><span class="nb">take </span><span class="mi">3</span> <span class="o">@</span><span class="nv">f</span><span class="p">))])</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">sequence-cycler</span>
+  <span class="p">[</span><span class="nv">s</span> <span class="nv">f</span> <span class="nv">t</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">foo</span> <span class="p">(</span><span class="nf">reagent/atom</span> <span class="nv">s</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+      <span class="p">(</span><span class="nf">js/setTimeout</span> <span class="o">#</span><span class="p">(</span><span class="nf">swap!</span> <span class="nv">foo</span> <span class="nv">rest</span><span class="p">)</span> <span class="nv">t</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">f</span> <span class="nv">foo</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">top-container</span> <span class="p">[]</span>
+  <span class="p">[</span><span class="ss">:div</span>
+   <span class="p">[</span><span class="nv">sequence-cycler</span> <span class="p">(</span><span class="nf">fibo</span><span class="p">)</span> <span class="nv">fibo-container</span> <span class="mi">1000</span><span class="p">]</span>
+   <span class="p">[</span><span class="nv">sequence-cycler</span> <span class="p">(</span><span class="nb">cycle </span><span class="p">[</span><span class="ss">:red</span> <span class="ss">:black</span> <span class="ss">:black</span><span class="p">])</span> <span class="nv">spinner-container</span> <span class="mi">200</span><span class="p">]</span>
+   <span class="p">[</span><span class="nv">sequence-cycler</span> <span class="p">(</span><span class="nb">cycle </span><span class="p">[</span><span class="ss">:up</span> <span class="ss">:right</span> <span class="ss">:down</span> <span class="ss">:left</span><span class="p">])</span> <span class="nv">square-spinner</span> <span class="mi">100</span><span class="p">]</span>
+   <span class="p">[</span><span class="nv">sequence-cycler</span> <span class="p">(</span><span class="nb">cycle </span><span class="s">&quot;|/-\\&quot;</span><span class="p">)</span> <span class="nv">ascii-spinner</span> <span class="mi">100</span><span class="p">]</span>
+   <span class="p">[</span><span class="nv">sequence-cycler</span> <span class="p">(</span><span class="nb">cycle </span><span class="s">&quot;this is cool &quot;</span><span class="p">)</span> <span class="nv">dash-container</span> <span class="mi">300</span><span class="p">]])</span>
+</pre></div>
